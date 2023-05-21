@@ -1,0 +1,17 @@
+.container {
+    margin-top: 50px;
+  }
+  
+  .action-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+  
+  .table {
+    margin-bottom: 50px;
+  }
+  
+  .btn {
+    margin-right: 10px;
+  }

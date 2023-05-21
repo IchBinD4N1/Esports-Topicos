@@ -32,7 +32,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 
 Route::controller(CountryController::class)->group(function() {
-    Route::get('/countries', 'index')->middleware('auth:api');
+    Route::get('/countries', 'index');
     Route::post('/country', 'store')->middleware('auth:api');
     Route::get('/country/{id}', 'show')->middleware('auth:api');
     Route::put('/country/{id}', 'update')->middleware('auth:api');
