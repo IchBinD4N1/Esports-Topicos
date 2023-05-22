@@ -117,12 +117,12 @@ const EditPlayer = () => {
 
   return (
     <div className="container mt-4">
-      <h3 className="mb-4">Editar Jugador</h3>
+      <h3 className="mb-4">Edit Player</h3>
       <ToastContainer />
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={update}>
         <div className="mb-3">
-          <label htmlFor="nickname" className="form-label">Apodo</label>
+          <label htmlFor="nickname" className="form-label">Nickname</label>
           <input
             id="nickname"
             type="text"
@@ -133,7 +133,7 @@ const EditPlayer = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="name" className="form-label">Nombre</label>
+          <label htmlFor="name" className="form-label">Name</label>
           <input
             id="name"
             type="text"
@@ -144,7 +144,7 @@ const EditPlayer = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="nationality" className="form-label">Nacionalidad</label>
+          <label htmlFor="nationality" className="form-label">Nacionality</label>
           <input
             id="nationality"
             type="text"
@@ -155,7 +155,7 @@ const EditPlayer = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="age" className="form-label">Edad</label>
+          <label htmlFor="age" className="form-label">Age</label>
           <input
             id="age"
             type="text"
@@ -167,9 +167,9 @@ const EditPlayer = () => {
         </div>
         <div className="d-flex justify-content-end">
           <Link to="/showPlayers" className="btn btn-outline-primary">
-            Regresar
+            Go Back
           </Link>
-          <button type="submit" className="btn btn-primary">Guardar</button>
+          <button type="submit" className="btn btn-primary">Save</button>
         </div>
       </form>
     </div>

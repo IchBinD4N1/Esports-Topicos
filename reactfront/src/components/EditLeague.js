@@ -88,12 +88,12 @@ const EditLeague = () => {
 
   return (
     <div className="container mt-4">
-      <h3 className="mb-4">Editar Liga</h3>
+      <h3 className="mb-4">Edit League</h3>
       <ToastContainer />
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={update}>
         <div className="mb-3">
-          <label htmlFor="name" className="form-label">Nombre</label>
+          <label htmlFor="name" className="form-label">Name</label>
           <input
             id="name"
             type="text"
@@ -104,7 +104,7 @@ const EditLeague = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="location" className="form-label">Ubicación</label>
+          <label htmlFor="location" className="form-label">Location</label>
           <input
             id="location"
             type="text"
@@ -118,7 +118,7 @@ const EditLeague = () => {
           <Link to="/showLeagues" className="btn btn-outline-primary">
             Go Back
           </Link>
-          <button type="submit" className="btn btn-primary">Guardar</button>
+          <button type="submit" className="btn btn-primary">Save</button>
         </div>
       </form>
     </div>
