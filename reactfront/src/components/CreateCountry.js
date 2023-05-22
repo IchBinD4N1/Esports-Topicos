@@ -12,6 +12,11 @@ const CreateCountry = () => {
   const [demonym, setDemonym] = useState('');
   const navigate = useNavigate();
 
+  const validateLetters = (value) => {
+    const regex = /^[A-Za-z\s]+$/;
+    return regex.test(value);
+  };
+
   const store = async (e) => {
     e.preventDefault();
 
@@ -20,8 +25,18 @@ const CreateCountry = () => {
       return;
     }
 
+    if (!validateLetters(name)) {
+      toast.error('Name should contain only letters.');
+      return;
+    }
+
     if (demonym.trim() === '') {
       toast.error('Please enter a demonym.');
+      return;
+    }
+
+    if (!validateLetters(demonym)) {
+      toast.error('Demonym should contain only letters.');
       return;
     }
 
