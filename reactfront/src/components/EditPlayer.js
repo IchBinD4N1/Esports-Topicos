@@ -49,7 +49,7 @@ const EditPlayer = () => {
       return;
     }
 
-    if (age.trim() === '') {
+    if (age.toString().trim() === '') {
       toast.error('Please enter an age.');
       return;
     }
