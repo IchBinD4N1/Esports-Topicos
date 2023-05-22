@@ -48,7 +48,7 @@ class TeamController extends Controller
     }
 
 
-    public function update(Request $request, Team $id)
+    public function update(Request $request,  $id)
     {
         //
         $team = Team::findOrFail($request->id);
