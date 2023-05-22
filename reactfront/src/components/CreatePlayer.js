@@ -5,30 +5,46 @@ import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const endpoint = 'http://localhost:8000/api/participant';
+const endpoint = 'http://localhost:8000/api/player';
 
-const CreateParticipant = () => {
-  const [league, setLeague] = useState('');
-  const [team, setTeam] = useState('');
+const CreatePlayer = () => {
+  const [nickname, setNickname] = useState('');
+  const [name, setName] = useState('');
+  const [nationality, setNationality] = useState('');
+  const [age, setAge] = useState('');
   const navigate = useNavigate();
 
   const store = async (e) => {
     e.preventDefault();
 
-    if (league.trim() === '') {
-      toast.error('Please enter a league.');
+    if (nickname.trim() === '') {
+      toast.error('Please enter a nickname.');
       return;
     }
 
-    if (team.trim() === '') {
-      toast.error('Please enter a team.');
+    if (name.trim() === '') {
+      toast.error('Please enter a name.');
+      return;
+    }
+
+    if (nationality.trim() === '') {
+      toast.error('Please enter a nationality.');
+      return;
+    }
+
+    if (age.trim() === '') {
+      toast.error('Please enter an age.');
       return;
     }
 
     const token = localStorage.getItem('access_token');
     try {
-      await axios.post(endpoint, { league, team }, { headers: { Authorization: `Bearer ${token}` } });
-      navigate('/showParticipants');
+      await axios.post(
+        endpoint,
+        { nickname, name, nationality, age },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      navigate('/showPlayers');
     } catch (error) {
       console.error(error);
     }
@@ -36,35 +52,59 @@ const CreateParticipant = () => {
 
   return (
     <div className="container">
-      <h3>Create Participant</h3>
+      <h3>Create Player</h3>
       <ToastContainer />
       <form onSubmit={store}>
         <div className="mb-3">
-          <label htmlFor="league" className="form-label">
-            League
+          <label htmlFor="nickname" className="form-label">
+            Nickname
           </label>
           <input
-            id="league"
-            value={league}
-            onChange={(e) => setLeague(e.target.value)}
+            id="nickname"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
             type="text"
             className="form-control"
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="team" className="form-label">
-            Team
+          <label htmlFor="name" className="form-label">
+            Name
           </label>
           <input
-            id="team"
-            value={team}
-            onChange={(e) => setTeam(e.target.value)}
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            type="text"
+            className="form-control"
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="nationality" className="form-label">
+            Nationality
+          </label>
+          <input
+            id="nationality"
+            value={nationality}
+            onChange={(e) => setNationality(e.target.value)}
+            type="text"
+            className="form-control"
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="age" className="form-label">
+            Age
+          </label>
+          <input
+            id="age"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
             type="text"
             className="form-control"
           />
         </div>
         <div className="d-flex justify-content-between">
-          <Link to="/showParticipants" className="btn btn-outline-primary">
+          <Link to="/showPlayers" className="btn btn-outline-primary">
             Go Back
           </Link>
           <button type="submit" className="btn btn-primary">
@@ -76,4 +116,4 @@ const CreateParticipant = () => {
   );
 };
 
-export default CreateParticipant;
+export default CreatePlayer;
