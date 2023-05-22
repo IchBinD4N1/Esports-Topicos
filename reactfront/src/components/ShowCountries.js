@@ -84,7 +84,7 @@ const ShowCountry = () => {
               </Link>
             )}
             <Link to="/index" className="btn btn-outline-primary">
-              Back to Menu  
+              Back to Menu
             </Link>
           </div>
         </div>
@@ -95,8 +95,6 @@ const ShowCountry = () => {
         </div>
       </div>
 
-
-
       <table className="table table-striped mx-auto mt-4" style={{ width: 'auto', tableLayout: 'auto' }}>
         <thead className="bg-primary text-white">
           <tr>
@@ -104,7 +102,7 @@ const ShowCountry = () => {
             <th onClick={() => handleSort('name')}>Name</th>
             <th onClick={() => handleSort('demonym')}>Demonym</th>
             {token && (
-            <th>Actions</th>
+              <th>Actions</th>
             )}
           </tr>
         </thead>
@@ -114,7 +112,7 @@ const ShowCountry = () => {
               <td>{country.id}</td>
               <td>{country.name}</td>
               <td>{country.demonym}</td>
-              
+
               {token && (
                 // Renderiza los botones de acciones solo si el token de autenticación está presente
                 <td>
@@ -124,7 +122,7 @@ const ShowCountry = () => {
                   <button onClick={() => deleteCountry(country.id)} className="btn btn-danger">
                     Delete
                   </button>
-              </td>
+                </td>
               )}
             </tr>
           ))}
