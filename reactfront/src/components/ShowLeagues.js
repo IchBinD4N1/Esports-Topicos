@@ -8,6 +8,7 @@ const endpoint = 'http://localhost:8000/api';
 const ShowLeagues = () => {
   const [leagues, setLeagues] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const token = localStorage.getItem('access_token'); // Obtén el token de autenticación
 
   useEffect(() => {
     getAllLeagues();
