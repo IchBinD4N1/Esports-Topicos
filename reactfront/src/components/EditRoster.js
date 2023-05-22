@@ -93,23 +93,12 @@ const EditRoster = () => {
 
   return (
     <div className="container mt-4">
-      <h3 className="mb-4">Editar Roster</h3>
+      <h3 className="mb-4">Edit Roster</h3>
       <ToastContainer />
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={update}>
         <div className="mb-3">
-          <label htmlFor="player" className="form-label">Jugador</label>
-          <input
-            id="player"
-            type="text"
-            className="form-control"
-            value={player}
-            onChange={(e) => setPlayer(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="team" className="form-label">Equipo</label>
+          <label htmlFor="team" className="form-label">Team</label>
           <input
             id="team"
             type="text"
@@ -121,9 +110,9 @@ const EditRoster = () => {
         </div>
         <div className="d-flex justify-content-end">
           <Link to="/showRosters" className="btn btn-outline-primary">
-            Regresar
+            Go Back
           </Link>
-          <button type="submit" className="btn btn-primary">Guardar</button>
+          <button type="submit" className="btn btn-primary">Save</button>
         </div>
       </form>
     </div>
