@@ -52,18 +52,31 @@ const ShowLeagues = () => {
 
   return (
     <div className="container">
-      <div className="show-leagues-header">
-        <h2>League List</h2>
-        <div className="action-bar">
-          <Link to="/createLeague" className="btn btn-primary">
-            Create
-          </Link>
-          <Link to="/index" className="btn btn-outline-primary">
-            Back to Menu
-          </Link>
+      <div className="row">
+        <div className="col" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <h2>League List</h2>
         </div>
       </div>
-
+      <div className="row">
+        <div className="col">
+          <div className="action-bar" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            {token && (
+              // Renderiza el botón "Create" solo si el token de autenticación está presente
+              <Link to="/createLeague" className="btn btn-primary">
+                Create
+              </Link>
+            )}
+            <Link to="/index" className="btn btn-outline-primary">
+              Back to Menu
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className="row" >
+        <div className="col" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <SearchBar onSearch={handleSearch} />
+        </div>
+      </div>
       <SearchBar onSearch={handleSearch} />
 
       <table className="table table-striped mx-auto mt-4" style={{ width: '80%' }}>
@@ -72,7 +85,9 @@ const ShowLeagues = () => {
             <th>Id</th>
             <th>Name</th>
             <th>Location Id</th>
-            <th>Actions</th>
+            {token && (
+              <th>Actions</th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -81,6 +96,7 @@ const ShowLeagues = () => {
               <td>{league.id}</td>
               <td>{league.name}</td>
               <td>{league.location}</td>
+              {token && (
               <td>
                 <Link to={`/editLeague/${league.id}`} className="btn btn-warning">
                   Edit
@@ -89,6 +105,7 @@ const ShowLeagues = () => {
                   Delete
                 </button>
               </td>
+              )}
             </tr>
           ))}
         </tbody>
