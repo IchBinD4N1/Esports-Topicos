@@ -3,21 +3,19 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 
-
 const endpoint = 'http://localhost:8000/api';
 
 const ShowCountry = () => {
   const [countries, setCountries] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+  const token = localStorage.getItem('access_token'); // Obtén el token de autenticación
 
   useEffect(() => {
     getAllCountries();
   }, []);
 
   const getAllCountries = async () => {
-    const token = localStorage.getItem('access_token');
-    console.log('Desde ShowCountry - Token:', token);
     try {
       const response = await axios.get(`${endpoint}/countries`, {
         headers: {
@@ -31,7 +29,6 @@ const ShowCountry = () => {
   };
 
   const deleteCountry = async (id) => {
-    const token = localStorage.getItem('access_token');
     try {
       await axios.delete(`${endpoint}/country/${id}`, {
         headers: {
@@ -71,34 +68,34 @@ const ShowCountry = () => {
   });
 
   return (
-    <div className="container" >
-
-<div className="row">
-        <div className="col" style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
+    <div className="container">
+      <div className="row">
+        <div className="col" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <h2>Country List</h2>
         </div>
       </div>
       <div className="row">
         <div className="col">
-        <div className="action-bar" style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
-          <Link to="/createCountry" className="btn btn-primary">
-            Create
-          </Link>
-          <Link to="/index" className="btn btn-outline-primary">
-            Back to Menu
-          </Link>
-        </div>
+          <div className="action-bar" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            {token && (
+              // Renderiza el botón "Create" solo si el token de autenticación está presente
+              <Link to="/createCountry" className="btn btn-primary">
+                Create
+              </Link>
+            )}
+            <Link to="/index" className="btn btn-outline-primary">
+              Back to Menu  
+            </Link>
+          </div>
         </div>
       </div>
       <div className="row" >
-        <div className="col" style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
+        <div className="col" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <SearchBar onSearch={handleSearch} />
         </div>
       </div>
-      
-    
 
-      
+
 
       <table className="table table-striped mx-auto mt-4" style={{ width: 'auto', tableLayout: 'auto' }}>
         <thead className="bg-primary text-white">
@@ -106,7 +103,9 @@ const ShowCountry = () => {
             <th onClick={() => handleSort('id')}>Id</th>
             <th onClick={() => handleSort('name')}>Name</th>
             <th onClick={() => handleSort('demonym')}>Demonym</th>
+            {token && (
             <th>Actions</th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -115,16 +114,18 @@ const ShowCountry = () => {
               <td>{country.id}</td>
               <td>{country.name}</td>
               <td>{country.demonym}</td>
-              <td>
-                <div className="btn-group">
+              
+              {token && (
+                // Renderiza los botones de acciones solo si el token de autenticación está presente
+                <td>
                   <Link to={`/editCountry/${country.id}`} className="btn btn-warning">
                     Edit
                   </Link>
                   <button onClick={() => deleteCountry(country.id)} className="btn btn-danger">
                     Delete
                   </button>
-                </div>
               </td>
+              )}
             </tr>
           ))}
         </tbody>
