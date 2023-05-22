@@ -32,15 +32,6 @@ const EditParticipant = () => {
       return;
     }
 
-    if (team.trim() === '') {
-      toast.error('Please enter a team.');
-      return;
-    }
-
-    if (!validateNumbers(team)) {
-      toast.error('Team should contain only numbers.');
-      return;
-    }
     try {
       const token = localStorage.getItem('access_token');
       if (!token) {
@@ -92,12 +83,12 @@ const EditParticipant = () => {
 
   return (
     <div className="container mt-4">
-      <h3 className="mb-4">Editar Participante</h3>
+      <h3 className="mb-4">Edit Participant</h3>
       <ToastContainer />
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={update}>
         <div className="mb-3">
-          <label htmlFor="league" className="form-label">Liga</label>
+          <label htmlFor="league" className="form-label">League</label>
           <input
             id="league"
             type="text"
@@ -107,22 +98,11 @@ const EditParticipant = () => {
             required
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="team" className="form-label">Equipo</label>
-          <input
-            id="team"
-            type="text"
-            className="form-control"
-            value={team}
-            onChange={(e) => setTeam(e.target.value)}
-            required
-          />
-        </div>
         <div className="d-flex justify-content-end">
           <Link to="/showParticipants" className="btn btn-outline-primary">
             Go Back
           </Link>
-          <button type="submit" className="btn btn-primary">Guardar</button>
+          <button type="submit" className="btn btn-primary">Save</button>
         </div>
       </form>
     </div>

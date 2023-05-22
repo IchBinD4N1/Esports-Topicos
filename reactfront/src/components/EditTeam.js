@@ -22,7 +22,7 @@ const EditTeam = () => {
       return;
     }
 
-    if (location.trim() === '') {
+    if (location.toString().trim() === '') {
       toast.error('Please enter a location.');
       return;
     }

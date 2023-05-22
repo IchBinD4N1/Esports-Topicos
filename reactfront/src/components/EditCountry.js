@@ -94,12 +94,12 @@ const EditCountry = () => {
 
   return (
     <div className="container mt-4">
-      <h3 className="mb-4">Editar País</h3>
+      <h3 className="mb-4">Edit Country</h3>
       <ToastContainer />
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={update}>
         <div className="mb-3">
-          <label htmlFor="name" className="form-label">Nombre</label>
+          <label htmlFor="name" className="form-label">Name</label>
           <input
             id="name"
             type="text"
@@ -110,7 +110,7 @@ const EditCountry = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="demonym" className="form-label">Gentilicio</label>
+          <label htmlFor="demonym" className="form-label">Demonym</label>
           <input
             id="demonym"
             type="text"
@@ -124,7 +124,7 @@ const EditCountry = () => {
           <Link to="/showCountries" className="btn btn-outline-primary">
             Go Back
           </Link>
-          <button type="submit" className="btn btn-primary">Guardar</button>
+          <button type="submit" className="btn btn-primary">Save</button>
         </div>
       </form>
     </div>
