@@ -31,7 +31,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
             <ul className="navbar-nav ml-auto"> {/* Alineación a la derecha */}
               <li className="nav-item">
                 <Link className="nav-link" to="/index">
-                  Menu
+                  Home
                 </Link>
               </li>
               <li className="nav-item">
@@ -66,7 +66,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
               </li>
               <li className="nav-item">
                 <button onClick={handleLogout} className="btn btn-danger">
-                  Cerrar sesión
+                  Logout
                 </button>
               </li>
             </ul>
@@ -74,12 +74,12 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
             <ul className="navbar-nav ml-auto"> {/* Alineación a la derecha */}
               <li className="nav-item">
                 <Link className="nav-link" to="/">
-                  Iniciar sesión
+                  Login
                 </Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/index">
-                  Menu
+                  Home
                 </Link>
               </li>
               <li className="nav-item">
