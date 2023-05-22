@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const endpoint = 'http://localhost:8000/api/roster';
 
@@ -42,6 +43,9 @@ const CreateRoster = () => {
             className="form-control"
           />
         </div>
+        <Link to="/showRosters" className="btn btn-outline-primary">
+          Go Back
+        </Link>
         <button type="submit" className="btn btn-primary">
           Save
         </button>

@@ -79,7 +79,7 @@ const ShowTeams = () => {
           <div className="action-bar" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             {token && (
               // Renderiza el botón "Create" solo si el token de autenticación está presente
-              <Link to="/createTeams" className="btn btn-primary">
+              <Link to="/createTeam" className="btn btn-primary">
                 Create
               </Link>
             )}

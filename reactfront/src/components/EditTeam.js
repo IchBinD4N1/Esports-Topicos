@@ -103,7 +103,7 @@ const EditTeam = () => {
           />
         </div>
         <div className="d-flex justify-content-end">
-        <Link to="/showTeams" className="btn btn-outline-primary">
+          <Link to="/showTeams" className="btn btn-outline-primary">
             Go Back
           </Link>
           <button type="submit" className="btn btn-primary">Save</button>
