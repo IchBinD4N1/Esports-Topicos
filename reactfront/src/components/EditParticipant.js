@@ -5,16 +5,16 @@ import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const endpoint = 'http://localhost:8000/api/league/';
+const endpoint = 'http://localhost:8000/api/participant/';
 
 const validateNumbers = (value) => {
   const regex = /^[0-9]+$/;
   return regex.test(value);
 };
 
-const EditLeague = () => {
-  const [name, setName] = useState('');
-  const [location, setLocation] = useState('');
+const EditParticipant = () => {
+  const [league, setLeague] = useState('');
+  const [team, setTeam] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { id } = useParams();
@@ -22,21 +22,25 @@ const EditLeague = () => {
   const update = async (e) => {
     e.preventDefault();
 
-    if (name.trim() === '') {
-      toast.error('Please enter a name.');
+    if (league.trim() === '') {
+      toast.error('Please enter a league.');
       return;
     }
 
-    if (location.trim() === '') {
-      toast.error('Please enter a location.');
+    if (!validateNumbers(league)) {
+      toast.error('League should contain only numbers.');
       return;
     }
-    
+
+    if (team.trim() === '') {
+      toast.error('Please enter a team.');
+      return;
+    }
+
     if (!validateNumbers(team)) {
-      toast.error('Player should contain only numbers.');
+      toast.error('Team should contain only numbers.');
       return;
     }
-
     try {
       const token = localStorage.getItem('access_token');
       if (!token) {
@@ -50,17 +54,17 @@ const EditLeague = () => {
         },
       };
 
-      await axios.put(`${endpoint}${id}`, { name, location }, config);
+      await axios.put(`${endpoint}${id}`, { league, team }, config);
 
-      navigate('/showLeagues');
+      navigate('/showParticipants');
     } catch (error) {
       console.error(error);
-      setError('Ha ocurrido un error al actualizar la liga');
+      setError('Ha ocurrido un error al actualizar el participante');
     }
   };
 
   useEffect(() => {
-    const getLeagueById = async () => {
+    const getParticipantById = async () => {
       try {
         const token = localStorage.getItem('access_token');
         if (!token) {
@@ -75,47 +79,47 @@ const EditLeague = () => {
         };
 
         const response = await axios.get(`${endpoint}${id}`, config);
-        setName(response.data.name);
-        setLocation(response.data.location);
+        setLeague(response.data.league);
+        setTeam(response.data.team);
       } catch (error) {
         console.error(error);
-        setError('Ha ocurrido un error al obtener la liga');
+        setError('Ha ocurrido un error al obtener el participante');
       }
     };
 
-    getLeagueById();
+    getParticipantById();
   }, [id]);
 
   return (
     <div className="container mt-4">
-      <h3 className="mb-4">Editar Liga</h3>
+      <h3 className="mb-4">Editar Participante</h3>
       <ToastContainer />
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={update}>
         <div className="mb-3">
-          <label htmlFor="name" className="form-label">Nombre</label>
+          <label htmlFor="league" className="form-label">Liga</label>
           <input
-            id="name"
+            id="league"
             type="text"
             className="form-control"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={league}
+            onChange={(e) => setLeague(e.target.value)}
             required
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="location" className="form-label">Ubicación</label>
+          <label htmlFor="team" className="form-label">Equipo</label>
           <input
-            id="location"
+            id="team"
             type="text"
             className="form-control"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            value={team}
+            onChange={(e) => setTeam(e.target.value)}
             required
           />
         </div>
         <div className="d-flex justify-content-end">
-          <Link to="/showLeagues" className="btn btn-outline-primary">
+          <Link to="/showParticipants" className="btn btn-outline-primary">
             Go Back
           </Link>
           <button type="submit" className="btn btn-primary">Guardar</button>
@@ -125,4 +129,4 @@ const EditLeague = () => {
   );
 };
 
-export default EditLeague;
+export default EditParticipant;

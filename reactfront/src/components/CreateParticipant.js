@@ -26,7 +26,7 @@ const CreateParticipant = () => {
     }
     
     if (!validateNumbers(league)) {
-      toast.error('Player should contain only numbers.');
+      toast.error('League should contain only numbers.');
       return;
     }
 
@@ -36,7 +36,7 @@ const CreateParticipant = () => {
     }
 
     if (!validateNumbers(team)) {
-      toast.error('Player should contain only numbers.');
+      toast.error('Team should contain only numbers.');
       return;
     }
 
