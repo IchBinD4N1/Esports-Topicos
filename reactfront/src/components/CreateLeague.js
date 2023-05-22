@@ -12,6 +12,11 @@ const CreateLeague = () => {
   const [location, setLocation] = useState('');
   const navigate = useNavigate();
 
+  const validateNumbers = (value) => {
+    const regex = /^[0-9]+$/;
+    return regex.test(value);
+  };
+
   const store = async (e) => {
     e.preventDefault();
 
@@ -22,6 +27,11 @@ const CreateLeague = () => {
 
     if (location.trim() === '') {
       toast.error('Please enter a location.');
+      return;
+    }
+
+    if (!validateNumbers(location)) {
+      toast.error('Location should contain only numbers.');
       return;
     }
 
