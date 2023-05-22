@@ -11,6 +11,11 @@ const CreateRoster = () => {
   const [player, setPlayer] = useState('');
   const [team, setTeam] = useState('');
   const navigate = useNavigate();
+  
+  const validateNumbers = (value) => {
+    const regex = /^[0-9]+$/;
+    return regex.test(value);
+  };
 
   const store = async (e) => {
     e.preventDefault();
