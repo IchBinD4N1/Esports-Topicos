@@ -28,12 +28,18 @@ const LoginForm = () => {
         password,
       });
 
+      const token = response.data.token; // Obtenemos el token de la respuesta
+
       toast.success('Inicio de sesión exitoso');
       console.log(response.data);
 
       // Restablecer los campos del formulario después del inicio de sesión exitoso
       setEmail('');
       setPassword('');
+
+      // Guardar el token en el almacenamiento local
+      localStorage.setItem('token', response.data.token);
+      console.log('token:', token);
 
       // Redirigir al usuario al IndexPage después del inicio de sesión exitoso
       navigate('/index'); // Cambia '/index' por la ruta correcta de tu página IndexPage

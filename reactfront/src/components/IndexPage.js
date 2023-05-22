@@ -9,6 +9,7 @@ import image3 from '../images/imagen3.jpg';
 
 const IndexPage = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const token = localStorage.getItem('access_token');
 
   useEffect(() => {
     const interval = setInterval(() => {
