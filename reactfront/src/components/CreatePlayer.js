@@ -14,6 +14,16 @@ const CreatePlayer = () => {
   const [age, setAge] = useState('');
   const navigate = useNavigate();
 
+  const validateNumbers = (value) => {
+    const regex = /^[0-9]+$/;
+    return regex.test(value);
+  };
+
+  const validateAgeRange = (value) => {
+    const parsedAge = parseInt(value);
+    return parsedAge >= 16 && parsedAge <= 122;
+  };
+
   const store = async (e) => {
     e.preventDefault();
 
@@ -32,8 +42,23 @@ const CreatePlayer = () => {
       return;
     }
 
+    if (!validateNumbers(nationality)) {
+      toast.error('Nationality should contain only numbers.');
+      return;
+    }
+
     if (age.trim() === '') {
       toast.error('Please enter an age.');
+      return;
+    }
+
+    if (!validateNumbers(age)) {
+      toast.error('Age should contain only numbers.');
+      return;
+    }
+
+    if (!validateAgeRange(age)) {
+      toast.error('Age should be between 16 and 122.');
       return;
     }
 
