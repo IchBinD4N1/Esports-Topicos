@@ -39,7 +39,7 @@ const EditPlayer = () => {
       return;
     }
 
-    if (nationality.trim() === '') {
+    if (nationality.toString().trim() === '') {
       toast.error('Please enter a nationality.');
       return;
     }
@@ -63,6 +63,7 @@ const EditPlayer = () => {
       toast.error('Age should be between 16 and 122.');
       return;
     }
+
     try {
       const token = localStorage.getItem('access_token');
       if (!token) {
