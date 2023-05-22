@@ -7,15 +7,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-
-
 class AuthController extends Controller
 {
-    //
-    public function register(Request $request){
-        $validatedData = $request ->validate([
-            'name'     => 'required|max:255',
-            'email'    => 'required|email|unique:users',
+    public function register(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users',
             'password' => 'required|confirmed'
         ]);
 
@@ -34,15 +32,14 @@ class AuthController extends Controller
         $loginData = $request->validate([
             'email' => 'email|required',
             'password' => 'required'
-
         ]);
 
-        if(!auth()->attempt($loginData)){
-            return response(['message' => 'Invalid Credentials']);
+        if (!auth()->attempt($loginData)) {
+            return response(['message' => 'Correo o contraseña incorrectos'], 401);
         }
 
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
 
-        return response(['user' => auth() -> user(),'access_token'=> $accessToken]);
+        return response(['user' => auth()->user(), 'access_token' => $accessToken]);
     }
 }

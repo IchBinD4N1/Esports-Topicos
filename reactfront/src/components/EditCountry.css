@@ -1,0 +1,39 @@
+.edit-country-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .edit-country-title {
+    margin-bottom: 20px;
+  }
+  
+  .edit-country-form .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .edit-country-form .form-label {
+    font-weight: bold;
+  }
+  
+  .edit-country-form .form-control {
+    width: 100%;
+  }
+  
+  .edit-country-form .invalid-feedback {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  .alert {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  
+  .alert-info {
+    background-color: #cce5ff;
+    border-color: #b8daff;
+    color: #004085;
+  }

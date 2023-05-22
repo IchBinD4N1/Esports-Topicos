@@ -10,9 +10,9 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); // Importamos la función useNavigate
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
@@ -28,54 +28,59 @@ const LoginForm = () => {
         password,
       });
 
-      const token = response.data.token; // Obtenemos el token de la respuesta
+      const { access_token, expires_in } = response.data;
 
       toast.success('Inicio de sesión exitoso');
       console.log(response.data);
 
-      // Restablecer los campos del formulario después del inicio de sesión exitoso
       setEmail('');
       setPassword('');
 
-      // Guardar el token en el almacenamiento local
-      localStorage.setItem('token', response.data.token);
-      console.log('token:', token);
+      // Guardar el token en el almacenamiento local y la fecha de expiración
+      const expirationDate = new Date().getTime() + expires_in * 1000;
+      localStorage.setItem('access_token', access_token);
+      localStorage.setItem('tokenExpiration', expirationDate);
+      console.log('Desde LoginForm - Token: ', access_token);
 
-      // Redirigir al usuario al IndexPage después del inicio de sesión exitoso
-      navigate('/index'); // Cambia '/index' por la ruta correcta de tu página IndexPage
+      navigate('/index');
     } catch (error) {
-      toast.error('Error en el inicio de sesión. Por favor, verifica tus credenciales.');
+      if (error.response && error.response.status === 401) {
+        toast.error('Correo o contraseña incorrectos');
+      } else {
+        toast.error('Error en el inicio de sesión. Por favor, verifica tus credenciales.');
+      }
       console.log(error);
-    } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="login-form-container">
+    <div className="container login-form-container">
       <h2>Iniciar sesión</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Correo electrónico</label>
+      <form onSubmit={handleLogin}>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">Correo electrónico</label>
           <input
             id="email"
             type="email"
             placeholder="Correo electrónico"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="form-control"
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="password">Contraseña</label>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">Contraseña</label>
           <input
             id="password"
             type="password"
             placeholder="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="form-control"
           />
         </div>
-        <button type="submit" disabled={loading}>
+        <button type="submit" className="btn btn-primary" disabled={loading}>
           {loading ? 'Cargando...' : 'Iniciar sesión'}
         </button>
       </form>
