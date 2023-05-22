@@ -8,14 +8,14 @@ const endpoint = 'http://localhost:8000/api';
 const ShowTeams = () => {
   const [teams, setTeams] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+  const token = localStorage.getItem('access_token');
 
   useEffect(() => {
     getAllTeams();
   }, []);
 
   const getAllTeams = async () => {
-    const token = localStorage.getItem('access_token');
-    console.log('Desde ShowTeams - Token:', token);
     try {
       const response = await axios.get(`${endpoint}/teams`, {
         headers: {
@@ -29,7 +29,6 @@ const ShowTeams = () => {
   };
 
   const deleteTeam = async (id) => {
-    const token = localStorage.getItem('access_token');
     try {
       await axios.delete(`${endpoint}/team/${id}`, {
         headers: {
@@ -46,33 +45,65 @@ const ShowTeams = () => {
     setSearchTerm(value);
   };
 
-  const filteredTeams = teams.filter((team) => {
+  const handleSort = (key) => {
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedTeams = [...teams].sort((a, b) => {
+    if (a[sortConfig.key] < b[sortConfig.key]) {
+      return sortConfig.direction === 'asc' ? -1 : 1;
+    }
+    if (a[sortConfig.key] > b[sortConfig.key]) {
+      return sortConfig.direction === 'asc' ? 1 : -1;
+    }
+    return 0;
+  });
+
+  const filteredTeams = sortedTeams.filter((team) => {
     return team.name.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
   return (
     <div className="container">
-      <div className="show-teams-header">
-        <h2>Team List</h2>
-        <div className="action-bar">
-          <Link to="/createTeam" className="btn btn-primary">
-            Create
-          </Link>
-          <Link to="/index" className="btn btn-outline-primary">
-            Back to Menu
-          </Link>
+      <div className="row">
+        <div className="col" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <h2>Team List</h2>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col">
+          <div className="action-bar" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            {token && (
+              // Renderiza el botón "Create" solo si el token de autenticación está presente
+              <Link to="/createTeams" className="btn btn-primary">
+                Create
+              </Link>
+            )}
+            <Link to="/index" className="btn btn-outline-primary">
+              Back to Menu
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className="row" >
+        <div className="col" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <SearchBar onSearch={handleSearch} />
         </div>
       </div>
 
-      <SearchBar onSearch={handleSearch} />
-
-      <table className="table table-striped mx-auto mt-4" style={{ width: '80%' }}>
+      <table className="table table-striped mx-auto mt-4" style={{ width: 'auto', tableLayout: 'auto' }}>
         <thead className="bg-primary text-white">
           <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Location</th>
+            <th onClick={() => handleSort('id')}>Id</th>
+            <th onClick={() => handleSort('name')}>Name</th>
+            <th onClick={() => handleSort('location')}>Location</th>
+            {token && (
             <th>Actions</th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -81,6 +112,7 @@ const ShowTeams = () => {
               <td>{team.id}</td>
               <td>{team.name}</td>
               <td>{team.location}</td>
+              {token && (
               <td>
                 <Link to={`/editTeam/${team.id}`} className="btn btn-warning">
                   Edit
@@ -89,6 +121,7 @@ const ShowTeams = () => {
                   Delete
                 </button>
               </td>
+              )}
             </tr>
           ))}
         </tbody>
