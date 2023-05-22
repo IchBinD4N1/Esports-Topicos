@@ -22,7 +22,7 @@ const EditRoster = () => {
   const update = async (e) => {
     e.preventDefault();
 
-    if (player.trim() === '') {
+    if (player.toString().trim() === '') {
       toast.error('Please enter a player.');
       return;
     }
