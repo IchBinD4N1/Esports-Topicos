@@ -31,7 +31,7 @@ const CreateTeam = () => {
     }
 
     if (!validateNumbers(location)) {
-      toast.error('Player should contain only numbers.');
+      toast.error('Location should contain only numbers.');
       return;
     }
 

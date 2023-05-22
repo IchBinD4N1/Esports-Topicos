@@ -2,8 +2,15 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const endpoint = 'http://localhost:8000/api/team/';
+
+const validateNumbers = (value) => {
+  const regex = /^[0-9]+$/;
+  return regex.test(value);
+};
 
 const EditTeam = () => {
   const [name, setName] = useState('');
@@ -15,60 +22,64 @@ const EditTeam = () => {
   const update = async (e) => {
     e.preventDefault();
 
-    try {
-      // Obtener el token de autenticación desde el almacenamiento (por ejemplo, localStorage)
-      const token = localStorage.getItem('access_token');
+    if (name.trim() === '') {
+      toast.error('Please enter a name.');
+      return;
+    }
 
-      // Verificar que se haya proporcionado un token válido
+    if (location.trim() === '') {
+      toast.error('Please enter a location.');
+      return;
+    }
+    
+    if (!validateNumbers(location)) {
+      toast.error('Location should contain only numbers.');
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('access_token');
       if (!token) {
         setError('No se ha proporcionado un token válido');
         return;
       }
 
-      // Configurar el encabezado de autorización con el token
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
 
-      // Realizar la solicitud PUT con el token de autorización
       await axios.put(`${endpoint}${id}`, { name, location }, config);
 
-      // Redirigir al índice
-      navigate('/showCountries');
+      navigate('/showTeams');
     } catch (error) {
       console.error(error);
-      setError('Ha ocurrido un error al actualizar el país');
+      setError('Ha ocurrido un error al actualizar el equipo');
     }
   };
 
   useEffect(() => {
     const getTeamById = async () => {
       try {
-        // Obtener el token de autenticación desde el almacenamiento (por ejemplo, localStorage)
         const token = localStorage.getItem('access_token');
-
-        // Verificar que se haya proporcionado un token válido
         if (!token) {
           setError('No se ha proporcionado un token válido');
           return;
         }
 
-        // Configurar el encabezado de autorización con el token
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         };
 
-        // Realizar la solicitud GET con el token de autorización
         const response = await axios.get(`${endpoint}${id}`, config);
         setName(response.data.name);
         setLocation(response.data.location);
       } catch (error) {
         console.error(error);
-        setError('Ha ocurrido un error al obtener el país');
+        setError('Ha ocurrido un error al obtener el equipo');
       }
     };
 
@@ -77,11 +88,12 @@ const EditTeam = () => {
 
   return (
     <div className="container mt-4">
-      <h3 className="mb-4">Edit Team</h3>
+      <h3 className="mb-4">Editar Equipo</h3>
+      <ToastContainer />
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={update}>
         <div className="mb-3">
-          <label htmlFor="name" className="form-label">Name</label>
+          <label htmlFor="name" className="form-label">Nombre</label>
           <input
             id="name"
             type="text"
@@ -92,9 +104,9 @@ const EditTeam = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="demonym" className="form-label">Location</label>
+          <label htmlFor="location" className="form-label">Ubicación</label>
           <input
-            id="demonym"
+            id="location"
             type="text"
             className="form-control"
             value={location}
@@ -104,9 +116,9 @@ const EditTeam = () => {
         </div>
         <div className="d-flex justify-content-end">
           <Link to="/showTeams" className="btn btn-outline-primary">
-            Go Back
+            Regresar
           </Link>
-          <button type="submit" className="btn btn-primary">Save</button>
+          <button type="submit" className="btn btn-primary">Guardar</button>
         </div>
       </form>
     </div>
