@@ -4,33 +4,25 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import RegisterForm from './components/RegisterForm';
 import LoginForm from './components/LoginForm';
 import IndexPage from './components/IndexPage';
+import Navbar from './components/Navbar';
 import ShowCountries from './components/ShowCountries';
 import CreateCountry from './components/CreateCountry';
 import EditCountry from './components/EditCountry';
 import ShowTeams from './components/ShowTeams';
-import ShowPlayers from './components/ShowPlayers';
-import Navbar from './components/Navbar';
-import ShowRosters from './components/ShowRosters';
-import ShowParticipants from './components/ShowParticipants';
-import ShowLeagues from './components/ShowLeagues';
-import CreatePlayer from './components/CreatePlayer';
 import CreateTeam from './components/CreateTeam';
-import CreateLeague from './components/CreateLeague';
-import CreateRoster from './components/CreateRoster';
-import CreateParticipant from './components/CreateParticipant';
 import EditTeam from './components/EditTeam';
+import ShowPlayers from './components/ShowPlayers';
+import CreatePlayer from './components/CreatePlayer';
 import EditPlayer from './components/EditPlayer';
-import EditLeague from './components/EditLeague';
+import ShowRosters from './components/ShowRosters';
+import CreateRoster from './components/CreateRoster';
 import EditRoster from './components/EditRoster';
-
-
-
-
-
-
-
-
-
+import ShowParticipants from './components/ShowParticipants';
+import CreateParticipant from './components/CreateParticipant';
+import EditParticipant from './components/EditParticipant';
+import ShowLeagues from './components/ShowLeagues';
+import CreateLeague from './components/CreateLeague';
+import EditLeague from './components/EditLeague';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -89,6 +81,7 @@ function App() {
               <Route path="/editRoster/:id" element={<EditRoster />} />
               <Route path="/showParticipants" element={<ShowParticipants />} />
               <Route path="/createParticipant" element={<CreateParticipant />} />
+              <Route path="/editParticipant/:id" element={<EditParticipant />} />
               <Route path="/showLeagues" element={<ShowLeagues />} />
               <Route path="/createLeague" element={<CreateLeague />} />
               <Route path="/editLeague/:id" element={<EditLeague />} />
