@@ -22,7 +22,7 @@ const EditTeam = () => {
       return;
     }
 
-    if (location.toString().trim() === '') {
+    if (location.trim() === '') {
       toast.error('Please enter a location.');
       return;
     }
@@ -78,12 +78,12 @@ const EditTeam = () => {
 
   return (
     <div className="container mt-4">
-      <h3 className="mb-4">Editar Equipo</h3>
+      <h3 className="mb-4">Edit Team</h3>
       <ToastContainer />
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={update}>
         <div className="mb-3">
-          <label htmlFor="name" className="form-label">Nombre</label>
+          <label htmlFor="name" className="form-label">Name</label>
           <input
             id="name"
             type="text"
@@ -94,7 +94,7 @@ const EditTeam = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="location" className="form-label">Ubicación</label>
+          <label htmlFor="location" className="form-label">Location</label>
           <input
             id="location"
             type="text"
@@ -106,9 +106,9 @@ const EditTeam = () => {
         </div>
         <div className="d-flex justify-content-end">
           <Link to="/showTeams" className="btn btn-outline-primary">
-            Regresar
+            Back
           </Link>
-          <button type="submit" className="btn btn-primary">Guardar</button>
+          <button type="submit" className="btn btn-primary">Save</button>
         </div>
       </form>
     </div>
