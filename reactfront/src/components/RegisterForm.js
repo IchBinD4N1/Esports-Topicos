@@ -78,10 +78,10 @@ const RegisterForm = () => {
 
   return (
     <div className="register-form-container">
-      <h2>Registro</h2>
+      <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Nombre:</label>
+          <label>Name:</label>
           <input
             type="text"
             placeholder="Nombre"
@@ -90,7 +90,7 @@ const RegisterForm = () => {
           />
         </div>
         <div className="form-group">
-          <label>Correo electrónico:</label>
+          <label>EMail:</label>
           <input
             type="email"
             placeholder="Correo electrónico"
@@ -99,7 +99,7 @@ const RegisterForm = () => {
           />
         </div>
         <div className="form-group">
-          <label>Contraseña:</label>
+          <label>Password:</label>
           <input
             type="password"
             placeholder="Contraseña"
@@ -108,7 +108,7 @@ const RegisterForm = () => {
           />
         </div>
         <div className="form-group">
-          <label>Confirmar contraseña:</label>
+          <label>Confirm Password:</label>
           <input
             type="password"
             placeholder="Confirmar contraseña"
@@ -117,10 +117,10 @@ const RegisterForm = () => {
           />
         </div>
         <button type="submit" disabled={loading}>
-          Registrarse
+          Register
         </button>
       </form>
-      <p>¿Ya tienes una cuenta? <Link to="/">Iniciar sesión</Link></p>
+      <p>¿Do you have account? <Link to="/">Login Here</Link></p>
       <ToastContainer />
     </div>
   );
