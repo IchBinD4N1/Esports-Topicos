@@ -7,11 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const endpoint = 'http://localhost:8000/api/team/';
 
-const validateNumbers = (value) => {
-  const regex = /^[0-9]+$/;
-  return regex.test(value);
-};
-
 const EditTeam = () => {
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
@@ -27,13 +22,8 @@ const EditTeam = () => {
       return;
     }
 
-    if (location.trim() === '') {
+    if (location.toString().trim() === '') {
       toast.error('Please enter a location.');
-      return;
-    }
-    
-    if (!validateNumbers(location)) {
-      toast.error('Location should contain only numbers.');
       return;
     }
 

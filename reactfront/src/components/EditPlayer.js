@@ -43,6 +43,7 @@ const EditPlayer = () => {
       toast.error('Please enter a nationality.');
       return;
     }
+
     if (!validateNumbers(nationality)) {
       toast.error('Nationality should contain only numbers.');
       return;
