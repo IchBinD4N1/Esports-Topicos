@@ -78,9 +78,9 @@ const ShowLeagues = () => {
           <SearchBar onSearch={handleSearch} />
         </div>
       </div>
-      <SearchBar onSearch={handleSearch} />
 
-      <table className="table table-striped mx-auto mt-4" style={{ width: '80%' }}>
+
+      <table className="table table-striped mx-auto mt-4" style={{ width: 'auto', tableLayout: 'auto' }}>
         <thead className="bg-primary text-white">
           <tr>
             <th>Id</th>

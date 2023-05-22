@@ -9,6 +9,7 @@ const ShowRosters = () => {
   const [rosters, setRosters] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: '' });
+  const token = localStorage.getItem('access_token'); // Obtén el token de autenticación
 
   useEffect(() => {
     getAllRosters();
@@ -78,28 +79,42 @@ const ShowRosters = () => {
   });
 
   return (
-    <div className="container">
-      <div className="show-rosters-header">
-        <h2>Roster List</h2>
-        <div className="action-bar">
-          <Link to="/createRoster" className="btn btn-primary">
-            Create
-          </Link>
-          <Link to="/index" className="btn btn-outline-primary">
-            Back to Menu
-          </Link>
+<div className="container">
+      <div className="row">
+        <div className="col" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <h2>Roster List</h2>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col">
+          <div className="action-bar" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            {token && (
+              // Renderiza el botón "Create" solo si el token de autenticación está presente
+              <Link to="/createRoster" className="btn btn-primary">
+                Create
+              </Link>
+            )}
+            <Link to="/index" className="btn btn-outline-primary">
+              Back to Menu
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className="row" >
+        <div className="col" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <SearchBar onSearch={handleSearch} />
         </div>
       </div>
 
-      <SearchBar onSearch={handleSearch} />
-
-      <table className="table table-striped mx-auto mt-4" style={{ width: '80%' }}>
+      <table className="table table-striped mx-auto mt-4" style={{ width: 'auto', tableLayout: 'auto' }}>
         <thead className="bg-primary text-white">
           <tr>
             <th onClick={() => handleSort('id')}>Id</th>
             <th onClick={() => handleSort('player')}>Player Id</th>
             <th onClick={() => handleSort('team')}>Team Id</th>
-            <th>Actions</th>
+            {token && (
+              <th>Actions</th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -108,6 +123,7 @@ const ShowRosters = () => {
               <td>{roster.id}</td>
               <td>{roster.player}</td>
               <td>{roster.team}</td>
+              {token && (
               <td>
                 <Link to={`/editRoster/${roster.id}`} className="btn btn-warning">
                   Edit
@@ -116,6 +132,7 @@ const ShowRosters = () => {
                   Delete
                 </button>
               </td>
+              )}
             </tr>
           ))}
         </tbody>
