@@ -82,6 +82,21 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                   Menu
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/showCountries">
+                  Country
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/showTeams">
+                  Team
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/showPlayers">
+                  Player
+                </Link>
+              </li>
             </ul>
           )}
         </div>
