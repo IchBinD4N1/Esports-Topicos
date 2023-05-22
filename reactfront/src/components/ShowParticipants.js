@@ -9,6 +9,7 @@ const ShowParticipants = () => {
   const [participants, setParticipants] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: '' });
+  const token = localStorage.getItem('access_token'); // Obtén el token de autenticación
 
   useEffect(() => {
     getAllParticipants();
@@ -79,27 +80,43 @@ const ShowParticipants = () => {
 
   return (
     <div className="container">
-      <div className="show-participant-header">
+    <div className="row">
+      <div className="col" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <h2>Participant List</h2>
-        <div className="action-bar">
-          <Link to="/createParticipant" className="btn btn-primary">
-            Create
-          </Link>
+      </div>
+    </div>
+    <div className="row">
+      <div className="col">
+        <div className="action-bar" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          {token && (
+            // Renderiza el botón "Create" solo si el token de autenticación está presente
+            <Link to="/createParticipant" className="btn btn-primary">
+              Create
+            </Link>
+          )}
           <Link to="/index" className="btn btn-outline-primary">
             Back to Menu
           </Link>
         </div>
       </div>
+    </div>
+    <div className="row" >
+      <div className="col" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <SearchBar onSearch={handleSearch} />
+      </div>
+    </div>
 
       <SearchBar onSearch={handleSearch} />
 
-      <table className="table table-striped mx-auto mt-4" style={{ width: '80%' }}>
+      <table className="table table-striped mx-auto mt-4" style={{ width: 'auto', tableLayout: 'auto' }}>
         <thead className="bg-primary text-white">
           <tr>
             <th onClick={() => handleSort('id')}>Id</th>
             <th onClick={() => handleSort('league')}>League Id</th>
             <th onClick={() => handleSort('team')}>Team Id</th>
-            <th>Actions</th>
+            {token && (
+              <th>Actions</th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -108,6 +125,7 @@ const ShowParticipants = () => {
               <td>{participant.id}</td>
               <td>{participant.league}</td>
               <td>{participant.team}</td>
+              {token && (
               <td>
                 <Link to={`/editParticipant/${participant.id}`} className="btn btn-warning">
                   Edit
@@ -116,6 +134,7 @@ const ShowParticipants = () => {
                   Delete
                 </button>
               </td>
+              )}
             </tr>
           ))}
         </tbody>
