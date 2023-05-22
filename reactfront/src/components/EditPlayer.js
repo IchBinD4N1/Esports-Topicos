@@ -2,8 +2,20 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const endpoint = 'http://localhost:8000/api/player/';
+
+const validateNumbers = (value) => {
+  const regex = /^[0-9]+$/;
+  return regex.test(value);
+};
+
+const validateAgeRange = (value) => {
+  const parsedAge = parseInt(value);
+  return parsedAge >= 16 && parsedAge <= 122;
+};
 
 const EditPlayer = () => {
   const [nickname, setNickname] = useState('');
@@ -17,54 +29,76 @@ const EditPlayer = () => {
   const update = async (e) => {
     e.preventDefault();
 
-    try {
-      // Obtener el token de autenticación desde el almacenamiento (por ejemplo, localStorage)
-      const token = localStorage.getItem('access_token');
+    if (nickname.trim() === '') {
+      toast.error('Please enter a nickname.');
+      return;
+    }
 
-      // Verificar que se haya proporcionado un token válido
+    if (name.trim() === '') {
+      toast.error('Please enter a name.');
+      return;
+    }
+
+    if (nationality.trim() === '') {
+      toast.error('Please enter a nationality.');
+      return;
+    }
+    if (!validateNumbers(nationality)) {
+      toast.error('Nationality should contain only numbers.');
+      return;
+    }
+
+    if (age.trim() === '') {
+      toast.error('Please enter an age.');
+      return;
+    }
+
+    if (!validateNumbers(age)) {
+      toast.error('Age should contain only numbers.');
+      return;
+    }
+
+    if (!validateAgeRange(age)) {
+      toast.error('Age should be between 16 and 122.');
+      return;
+    }
+    try {
+      const token = localStorage.getItem('access_token');
       if (!token) {
         setError('No se ha proporcionado un token válido');
         return;
       }
 
-      // Configurar el encabezado de autorización con el token
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
 
-      // Realizar la solicitud PUT con el token de autorización
       await axios.put(`${endpoint}${id}`, { nickname, name, nationality, age }, config);
 
-      // Redirigir al índice
       navigate('/showPlayers');
     } catch (error) {
       console.error(error);
-      setError('Ha ocurrido un error al actualizar el país');
+      setError('Ha ocurrido un error al actualizar el jugador');
     }
   };
 
   useEffect(() => {
     const getPlayerById = async () => {
       try {
-        // Obtener el token de autenticación desde el almacenamiento (por ejemplo, localStorage)
         const token = localStorage.getItem('access_token');
-
-        // Verificar que se haya proporcionado un token válido
         if (!token) {
           setError('No se ha proporcionado un token válido');
           return;
         }
 
-        // Configurar el encabezado de autorización con el token
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         };
 
-        // Realizar la solicitud GET con el token de autorización
         const response = await axios.get(`${endpoint}${id}`, config);
         setNickname(response.data.nickname);
         setName(response.data.name);
@@ -72,7 +106,7 @@ const EditPlayer = () => {
         setAge(response.data.age);
       } catch (error) {
         console.error(error);
-        setError('Ha ocurrido un error al obtener el país');
+        setError('Ha ocurrido un error al obtener el jugador');
       }
     };
 
@@ -81,11 +115,12 @@ const EditPlayer = () => {
 
   return (
     <div className="container mt-4">
-      <h3 className="mb-4">Edit Player</h3>
+      <h3 className="mb-4">Editar Jugador</h3>
+      <ToastContainer />
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={update}>
         <div className="mb-3">
-          <label htmlFor="nickname" className="form-label">Nickname</label>
+          <label htmlFor="nickname" className="form-label">Apodo</label>
           <input
             id="nickname"
             type="text"
@@ -96,7 +131,7 @@ const EditPlayer = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="name" className="form-label">Name</label>
+          <label htmlFor="name" className="form-label">Nombre</label>
           <input
             id="name"
             type="text"
@@ -107,7 +142,7 @@ const EditPlayer = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="nationality" className="form-label">Nationality</label>
+          <label htmlFor="nationality" className="form-label">Nacionalidad</label>
           <input
             id="nationality"
             type="text"
@@ -118,7 +153,7 @@ const EditPlayer = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="age" className="form-label">Age</label>
+          <label htmlFor="age" className="form-label">Edad</label>
           <input
             id="age"
             type="text"
@@ -129,8 +164,8 @@ const EditPlayer = () => {
           />
         </div>
         <div className="d-flex justify-content-end">
-        <Link to="/showPlayers" className="btn btn-outline-primary">
-            Go Back
+          <Link to="/showPlayers" className="btn btn-outline-primary">
+            Regresar
           </Link>
           <button type="submit" className="btn btn-primary">Guardar</button>
         </div>
