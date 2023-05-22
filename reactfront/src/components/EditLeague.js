@@ -27,13 +27,13 @@ const EditLeague = () => {
       return;
     }
 
-    if (location.trim() === '') {
+    if (location.toString().trim() === '') {
       toast.error('Please enter a location.');
       return;
     }
     
     if (!validateNumbers(location)) {
-      toast.error('Locaiton should contain only numbers.');
+      toast.error('Location should contain only numbers.');
       return;
     }
 
